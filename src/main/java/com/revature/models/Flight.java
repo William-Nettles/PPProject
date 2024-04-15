@@ -1,6 +1,7 @@
 package com.revature.models;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,12 +13,16 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private int depTime;
+    @Column(nullable = false)
     private int arrTime;
 
+    @Column(nullable = false)
     private String depCity;
+    @Column(nullable = false)
     private String arrCity;
-
+    @Column(nullable = false)
     private String airline;
 
     public Flight() {
