@@ -40,12 +40,12 @@ public class FlightController {
 
     @PostMapping
     public ResponseEntity<Flight> addFlight(@RequestBody Flight flight) {
-        return ResponseEntity.ok(flightDAO.save(flight));
+        return ResponseEntity.status(201).body(flightDAO.save(flight));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateFlight(@PathVariable int id, @RequestBody Flight newFlight) {
-        return null;
+    @PutMapping()
+    public ResponseEntity<Object> updateFlight(@RequestBody Flight flight) {
+        return ResponseEntity.status(202).body(flightDAO.save(flight));
     }
 
 
