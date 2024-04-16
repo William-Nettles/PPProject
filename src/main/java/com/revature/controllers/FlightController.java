@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @RestController //This makes a Class a Bean and also converts request data into JSON automatically
 @RequestMapping("/flights") // Any HTTP requests sent to the app ending in /cars will go to this controller
-@ResponseBody
 public class FlightController {
 
     private FlightDAO flightDAO;
@@ -41,20 +40,12 @@ public class FlightController {
 
     @PostMapping
     public ResponseEntity<Flight> addFlight(@RequestBody Flight flight) {
-        return ResponseEntity.ok(flightDAO.save(flight));
+        return ResponseEntity.status(201).body(flightDAO.save(flight));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateFlight(@PathVariable int id, @RequestBody Flight newFlight) {
-
-        Optional<Flight> flight = flightDAO.findById(id);
-
-        return null;
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Flight> deleteFlight() {
-        return null;
+    @PutMapping()
+    public ResponseEntity<Object> updateFlight(@RequestBody Flight flight) {
+        return ResponseEntity.status(202).body(flightDAO.save(flight));
     }
 
 
