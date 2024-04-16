@@ -62,7 +62,7 @@ public class PassengerController {
 //    }
 
     @DeleteMapping("/{passId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable int passId) {
+    public ResponseEntity<Object> deletePassenger(@PathVariable int passId) {
         Optional<Passenger> p = passengerDAO.findById(passId);
 
         Passenger passenger = p.get();
