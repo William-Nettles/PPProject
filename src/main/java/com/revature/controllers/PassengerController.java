@@ -21,16 +21,19 @@ public class PassengerController {
     FlightDAO flightDAO;
 
     @Autowired
-    public PassengerController(PassengerDAO passengerDAO) {
+    public PassengerController(PassengerDAO passengerDAO, FlightDAO flightDAO) {
         this.passengerDAO = passengerDAO;
+        this.flightDAO = flightDAO;
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Passenger> insertPassenger(@RequestBody Passenger passenger, @PathVariable int id){
+    public ResponseEntity<Object> insertPassenger(@RequestBody Passenger passenger, @PathVariable int id){
 
-        Flight f = flightDAO.findById(id).get();
-
-        passenger.setFlight(f);
+        Optional<Flight> f = flightDAO.findById(id);
+        if(f.isEmpty()){
+            return ResponseEntity.status(404).body("Bad Flight ID");
+        }
+        passenger.setFlight(f.get());
 
         Passenger p = passengerDAO.save(passenger);
         return ResponseEntity.status(201).body(p);
@@ -38,9 +41,7 @@ public class PassengerController {
     @GetMapping("/{id}")
     public ResponseEntity<List<Passenger>> getAllPassengersByflightId( @PathVariable int id){
 
-        Flight f = flightDAO.findById(id).get();
-
-        if(f == null ){
+        if(flightDAO.findById(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }
 

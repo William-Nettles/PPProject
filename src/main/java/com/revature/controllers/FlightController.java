@@ -15,9 +15,9 @@ import java.util.Optional;
 @RequestMapping("/flights") // Any HTTP requests sent to the app ending in /cars will go to this controller
 public class FlightController {
 
-    private FlightDAO flightDAO;
+    private final FlightDAO flightDAO;
 
-    //we need to inject the FlightDAO bean into this Controller. We need to build a contructor
+    //we need to inject the FlightDAO bean into this Controller. We need to build a constructor
     @Autowired
     public FlightController(FlightDAO flightDAO) {
         this.flightDAO = flightDAO;
