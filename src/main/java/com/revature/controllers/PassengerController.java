@@ -45,10 +45,8 @@ public class PassengerController {
             return ResponseEntity.notFound().build();
         }
 
-
        List<Passenger> p = passengerDAO.findAllByFlightId(id);
-
-       return ResponseEntity.status(201).body(p);
+       return ResponseEntity.status(200).body(p);
     }
 
 //    @PutMapping("/{id}")
@@ -66,6 +64,8 @@ public class PassengerController {
     public ResponseEntity<Object> deletePassenger(@PathVariable int passId) {
         Optional<Passenger> p = passengerDAO.findById(passId);
 
+        if (p.isEmpty())
+            return ResponseEntity.status(404).body("Bad ID");
         Passenger passenger = p.get();
         passengerDAO.deleteById(passId);
 
