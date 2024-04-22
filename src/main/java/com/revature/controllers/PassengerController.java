@@ -49,16 +49,23 @@ public class PassengerController {
        return ResponseEntity.status(200).body(p);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity <Passenger> updatePassenger(@RequestBody Passenger passenger, @PathVariable int id){
-//
-//        Flight f = flightDAO.findById(id).get();
-//
-//        passenger.setFlight(f);
-//
-//        Passenger p = passengerDAO.save(passenger);
-//        return ResponseEntity.ok(p);
-//    }
+    @PutMapping("/{passId}")
+    public ResponseEntity<Object> updatePassengerFlight(@RequestBody int flightId, @PathVariable int passId){
+
+        Optional<Flight> f = flightDAO.findById(flightId);
+
+        if(f.isEmpty())
+            return ResponseEntity.status(404).body("Bad Flight ID");
+
+        Optional<Passenger> passenger = passengerDAO.findById(passId);
+        if(passenger.isEmpty())
+            return ResponseEntity.status(404).body("Bad Passenger ID");
+
+        Passenger p = passengerDAO.save(passenger.get());
+        p.setFlight(f.get());
+        passengerDAO.save(p);
+        return ResponseEntity.ok(p);
+    }
 
     @DeleteMapping("/{passId}")
     public ResponseEntity<Object> deletePassenger(@PathVariable int passId) {
