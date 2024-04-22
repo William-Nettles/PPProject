@@ -61,7 +61,7 @@ public class PassengerController {
         if(passenger.isEmpty())
             return ResponseEntity.status(404).body("Bad Passenger ID");
 
-        Passenger p = passengerDAO.save(passenger.get());
+        Passenger p = passenger.get();
         p.setFlight(f.get());
         passengerDAO.save(p);
         return ResponseEntity.ok(p);
